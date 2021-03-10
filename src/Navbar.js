@@ -7,8 +7,6 @@ const Navbar = (props) => {
             <div className="links">
                 <a href="/">Home</a>
                 <a href="/create">New Blog</a>
-                <button onClick={props.function}>function</button>
-
             </div>
         </nav>
     );
