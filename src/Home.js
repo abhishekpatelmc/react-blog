@@ -22,16 +22,16 @@ const Home = () => {
 
   useEffect(() => {
     console.log('Use Effect ran');
-    console.log(blogs);
   }, []);
 
   return (
     <div className="home">
-      <BlogList blogs={blogs} title="All Blogs!" handelDelete={handelDelete}/>
+      <BlogList blogs={blogs} title="All Blogs!" handelDelete={handelDelete} />
       <button onClick={() => {
         setName('Abhi')
       }}>Chane name </button>
-    </div> 
+      <p>{name}</p>
+    </div>
   );
 };
 
