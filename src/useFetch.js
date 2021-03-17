@@ -6,7 +6,6 @@ const useFetch = (url) => {
     const [isPending, setIsPending] = useState(true);
     const [error, setError] = useState(null);
 
-
     useEffect(() => {
         fetch(url )
           .then(res => {
@@ -25,6 +24,9 @@ const useFetch = (url) => {
             setIsPending(false);
             setError(err.message);
           })
+
+      return () => console.log('clean up')
+
     }, [url]) ;
 
     return { data, isPending, error };
