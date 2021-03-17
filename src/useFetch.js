@@ -23,8 +23,13 @@ const useFetch = (url) => {
           })
           .catch(err => {
             // auto catches network / connection error
-            setIsPending(false);
-            setError(err.message);
+            if (err.name ==  'AbortError'){
+                console.log('Fetch Aborted');
+            }else {
+              setIsPending(false);
+              setError(err.message);
+            }
+            
           })
 
       return () => abortCont.abort();
