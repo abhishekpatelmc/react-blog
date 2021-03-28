@@ -1,35 +1,59 @@
 import { useState } from "react";
+import { useHistory } from 'react-router-dom';
 
 const Create = () => {
-     const [title, setTitle] = useState('');
-     const [body, setBody] = useState('');
+    const [title, setTitle] = useState('');
+    const [body, setBody] = useState('');
+    const [author, setAuthor] = useState('mario')
+    const [isPending, setIsPending] = useState(false);
+    const history = useHistory();
+
+    const handelSubmit = (e) => {
+        e.preventDefault();
+        const blog = { title, body, author };
+
+        setIsPending(true);
+
+        fetch('http://localhost:8000/blogs', {
+            method: 'POST',
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify(blog)
+        }).then(() => {
+            console.log('new blog added');
+            setIsPending(false);
+            // history.go(-1);
+            history.push('/');
+        })
+    }
 
     return (
         <div className="create">
             <h2>Add a New Blog</h2>
-            <form >
+            <form onSubmit={handelSubmit}>
                 <label > Blog title: </label>
                 <input
                     type="text"
                     required
-                    value = {title}
-                    onChange = {(e) =>  setTitle(e.target.value)}
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                 />
                 <label > Blog body: </label>
                 <textarea
                     required
-                    value = {body}
-                    onChange = { (e) => {setBody(e.target.value)}}
+                    value={body}
+                    onChange={(e) => { setBody(e.target.value) }}
                 >
                 </textarea>
                 <label > Blog author: </label>
-                <select>
+                <select
+                    value={author}
+                    onChange={(e) => { setAuthor(e.target.value) }}
+                >
                     <option value="mario">Mario</option>
                     <option value="yoshi">Yoshi</option>
                 </select>
-                <button>Add Blog</button>
-                <p>{title}</p>
-                <p>{body}</p>
+                { !isPending && <button>Add Blog</button> }
+                { isPending && <button disabled >Adding Blog...</button> }
             </form>
         </div>
     );
